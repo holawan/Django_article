@@ -20,5 +20,5 @@ class Movie(models.Model) :
     description = models.TextField()
 
     def __str__(self):
-        return f'제목: {title} 평점{score}'
+        return f'제목: {self.title} / 평점:{self.score}'
     

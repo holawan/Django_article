@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+  <h1>DETAIL</h1>
+
+  <img src="{{movie.poster_url}}" alt="{{movie.title}}">
+  <hr>
+
+  <p>{{movie.title}}</p>
+  <p>Audience : {{movie.audience}}</p>
+  <p>Release Dates : {{movie.release_date}}</p>
+  <p>Genre : {{movie.genre}}</p>
+  <p>Score : {{movie.score}}</p>
+  <p>{{movie.description}}</p>
+{% endblock content %}
