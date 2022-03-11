@@ -9,7 +9,32 @@ def index(request) :
     }
     return render(request,'movies/index.html',context)
 
+def new(request) :
+    
+    return render(request,'movies/new.html')
 
+def create(request) :
+    title = request.POST.get('title')
+    audience = request.POST.get('audience')
+    release_date = request.POST.get('release_date')
+    genre = request.POST.get('genre')
+    score = request.POST.get('score')
+    poster_url = request.POST.get('url')
+    description = request.POST.get('description')
+
+    movie = Movie()
+
+    movie.title=title
+    movie.audience = audience
+    movie.release_date = release_date
+    movie.genre = genre
+    movie.score = score
+    movie.poster_url = poster_url
+    movie.description = description
+    movie.save()
+
+    return redirect('movies:detail', movie.pk)
+    
 def detail(request,pk) :
     movie = Movie.objects.get(pk=pk) 
 
@@ -19,4 +44,11 @@ def detail(request,pk) :
 
     return render(request,'movies/detail.html',context)
 
+
+def delete(request,pk) :
+    if request.method == 'POST' : 
+        movie = Movie.objects.get(pk=pk)
+
+        movie.delete()
+    return redirect( 'movies:index')
 

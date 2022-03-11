@@ -14,4 +14,10 @@
   <p>Genre : {{movie.genre}}</p>
   <p>Score : {{movie.score}}</p>
   <p>{{movie.description}}</p>
+  {% comment %} <a href="{% url 'movies:edit' %}">EDIT</a> {% endcomment %}
+  <form action="{% url 'movies:delete' movie.pk %}" method = 'POST'>
+    {% csrf_token %}
+    <button class="btn btn-link">DELETE</button>
+  </form>
+  <a href="{% url 'movies:index' %}">BACK</a>
 {% endblock content %}

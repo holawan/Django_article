@@ -5,6 +5,7 @@
 
   <h1>INDEX</h1>
 
+  <a href="{% url 'movies:new' %}">NEW</a>
   {% for movie in movies %}
     <a href="{% url 'movies:detail' movie.pk %}">{{movie.title}}</a>
     <p>{{movie.score}}</p>

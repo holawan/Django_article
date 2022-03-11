@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+  <h1>NEW</h1>
+  <hr>
+
+  <form action="{% url 'movies:create' %} method=POST">
+    <label for="title" id="title" name="title">TITLE</label>
+    <input type="text" >
+    <br>
+    <label for="audience" id="audience" name="audience">AUDIENCE</label>
+    <input type="number">
+    <br>
+    <label for="release_date" id="release_date" name="release_date">RELEASE_DATE</label>
+    <input type="date" name="release_date">
+    <br>
+    <label for="genre" id="genre" name="genre">GENRE</label>
+    <select for = 'genre' >
+      <option value="comedy">코미디</option>
+      <option value="action">액션</option>
+      <option value="thriller">스릴러</option>
+      <option value="fear">공포</option>
+      <option value="war">전쟁</option>
+    </select>
+    <br>
+    <label for="score" id="score" name="score">SCORE</label>
+    <input type="number">
+    <br>
+    <label for="url" id="url" name="url">POSTER_URL</label>
+    <input type="url">
+    <br>
+    <label for="description"> description</label>
+    <textarea name="description" id="description" cols="10" rows="4"></textarea>
+
+    <br>
+    <input type="submit">
+
+  </form>
+{% endblock content %}
