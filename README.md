@@ -40,525 +40,474 @@ django 프로젝트 이름은 pjt05, 앱 이름은 movies로 지정합니다.
 
 - code
 
+  ``` python
+  #models.py
+  
+  from django.db import models
+  
+  # Create your models here.
+  
+  class Movie(models.Model) :
+      
+      #영화제목
+      title = models.CharField(max_length=20)
+      #관객 수
+      audience = models.IntegerField()
+      #개봉일
+      release_date= models.DateField()
+      #장르
+      genre = models.CharField(max_length=30)
+      #평점
+      score = models.FloatField()
+      #포스터 경로
+      poster_url = models.TextField()
+      #줄거리
+      description = models.TextField()
+  
+      def __str__(self):
+          return f'제목: {self.title} / 평점:{self.score}'
+  
+  #admin.py
+  from django.apps import AppConfig
+  
+  
+  class MoviesConfig(AppConfig):
+      default_auto_field = 'django.db.models.BigAutoField'
+      name = 'movies'
+  
+  ```
+  
+- 해결 방식 
+
+  1. Movieclass를 만들어 각 항목마다 어울리는 필드를 입력했습니다.
+  1. migration으로 sql에 정보를 전달했습니다.  
+  1. createsuperuser를 이용해 관리자 계정을 만들었습니다. 
+  2. \_\_str__을 이용해서 admin 페이지에서 보여줄 내용을 구성했습니다. 
+  
+- 이 문제에서 어려웠던 점
+
+- 내가 생각하는 이 문제의 포인트
+
+  - 클래스 생성 
+  - 관리자 계정 만들기
+  - migration
+  
+- 이 문제의 느낀점
+
+  - 지난 과제를 복기하다 보니 금방 해결할 수 있었습니다. 
+
+## B. Template
+
+#### 요구사항 : 
+
+i. 공유템플릿 이용하기
+
+### base.html
+
+- 기본 html 구성을 하고, 부트스트랩 요소를 추가했습니다.  
+
   ``` html
   <!DOCTYPE html>
-  <html lang="ko">
+  <html lang="en">
   <head>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
   
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <!-- Custom CSS -->
-  
-    <title>Navbar Footer Test</title>
   </head>
   <body>
-    <!-- 01_nav_footer.html -->
-    <!-- 768px에 리스트 요소가 햄버거로 될 수 있도록 navbar-expand-lg를 md로 변경  -->
-    <!-- 배경을 검은색으로 만들고 스크롤 해도 나오도록 상단에 고정 -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top ">
-      <!-- navbar의 요소들을 flex와 justify-content-between를 이용해 양 끝에 정렬 -->
-      <div class="container-fluid  d-flex justify-content-between ">
-        <!-- 로고 넣기 -->
-        <a class="navbar-brand" href="/../movies/">SSAFY MOIVE</a>
-          <div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav">
-                <!-- 각 리스트 요소를 클릭하면 페이지가 전환되게 구현  -->
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="/../movies/">Home</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'movies:recommendations' %}">영화 추천 받기</a>
-                </lfixed-bootoom i>
-              </ul>
-            </div>
-          </div>
-      </div>
-    </nav>
-    {% block header %}
-    
-    
-    {% endblock header %}
+  {% block content %}
   
-    {% block movies %}
-    
-    {% endblock movies %}
   
-  <!-- 푸터 만들기 -->
-    <footer class="d-flex fixed-bottom d-flex justify-content-center align-items-center bg-dark">
-      <div class="text-center p-2 text-white me-5">Web-bootstrap PJT, by김동완</div>
-      <div class="d-grid gap-2 d-md-block">
-        <a href="javascript:window.scrollTo(0,0);"><button class="ml-5 btn btn-primary" type="button">Top</button></a>
-      </div>
-    </footer>
-  
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+  {% endblock content %} 
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   </body>
   </html>
   ```
-  
-  ```css
-  /* 01_nav_footer.css */
-  /* 아래에 코드를 작성해 주세요. */
-  .logo{
-    width: 150px;
-  }
-  
-  
-  .nav_header {
-    height: 700px;
-    background-image: url('images/header.jpg');
-    background-size: cover;
-  }
-  
-  ```
-  
-- 해결 방식 
-
-  1. Navbar 컴포넌트를 이용해 네비게에션 바의 뼈대를 구축했습니다.
-  2. navbar 내부를 컨테이너로 만들고 d-flex 내부 요소를 이용해 양 끝에 요소를 정렬했습니다. 
-  3. 각 리스트 요소에 href로 하이퍼링크를 줘 페이지가 전환되게 했습니다.
-  4. footer에 javascript를 이용해 클릭시 최상단으로 이동하게 구현했습니다.
-  
-- 이 문제에서 어려웠던 점 
-
-  - 페이지를 상단으로 이동하게 하는 자바스크립 구현
-  
-- 내가 생각하는 이 문제의 포인트
-
-  - 네비게이션 바 구현, 최상/하단 고정, 페이지 상단으로 이동하게 하는 버튼 구현 
-  
-- 이 문제의 느낀점
-
-  - 지난 프로젝트를 복기하다보니 쉽게 해결되었다. 점진적으로 발전시켜나가는 것이 중요한 것 가탇. 
-
-## B. index.html
-
-#### 요구사항 : 
-
-i. Bootstrap Card 컴포넌트를 사용해 최소 6개 이상의 영화를 조회합니다.
-ii. 영화 포스터 이미지는 https://via.placeholder.com/를 사용하거나
-직접 static 파일을 사용해 출력합니다.
-iii. 영화 상세 내용은 랜덤 텍스트를 출력하거나 직접 작성합니다.
-iv. 영화 포스터를 클릭하면 해당 영화의 다른 스틸 컷을 볼 수 있는
-Bootstrap Carousel 컴포넌트가 출력됩니다.
-
-### 결과
-
-- 문제 접근 방법 : static으로 영화를 입력하고, 영화 스틸컷은 static에서 일단 구현하고 나중에  api로 해결하자. 
-
-  ``` html
-  {% extends 'base.html' %}
-  
-  {% block header %}
-  {% load static %}
-  <header>
-    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active" data-bs-interval="2000">
-          <img src="{% static 'header1.jpg' %}" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item" data-bs-interval="2000">
-          <img src="{% static 'header2.jpg' %}" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item" data-bs-interval="2000">
-          <img src="{% static 'header3.jpg' %}" class="d-block w-100" alt="...">
-        </div>
-      </div>
-      <!-- 버튼을 클릭하면 위치에 따라 이전, 이후 사진으로 이동한다.  -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-    {% comment %} <div class="container">
-      <a href="https://placeholder.com"><img src="https://via.placeholder.com/840x600" alt=""></a>
-    </div> {% endcomment %}
-  </header>
-  
-  {% endblock header %}
-  
-  {% block movies %}
-    <div class="container">
-      <section>
-        <!-- class = row로 주고, 화면이 sm이하일 때는 1개만 lg 이하일때는 2개 lg 이상일때는 3개가 보이게함  -->
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 ">
-          <article >
-            <!-- card 컴포넌트를 이용해 영화 사진, 제목, 설명 구현 -->
-            <div class="card" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
-              <img src="{% static 'movie1.jpg' %}" class="img-fluid rounded-start" alt="...">
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Still Cut</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <img src="{% static 'movie1_still.jpg' %}" alt="" style= "width: 466px; height:400px">
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-              <div class="card-body">
-                <h5 class="card-title">쇼생크 탈출</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              </div>
-          </article>
-          <article>
-            <div class="card" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
-              <img src="{% static 'movie2.jpg' %}" class="img-fluid rounded-start" alt="...">
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Still Cut</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <img src="{% static 'movie2_still.jpg' %}" alt="" style= "width: 466px; height:400px">
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                  </div>
-                </div>
-              </div>
-            </div>          
-              <div class="card-body">
-                <h5 class="card-title">죽은 시인의 사회</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              </div>
-          </article>
-          <article>
-            <div class="card" data-bs-toggle="modal" data-bs-target="#staticBackdrop3">
-              <img src="{% static 'movie3.jpg' %}" class="img-fluid rounded-start" alt="...">
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Still Cut</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <img src="{% static 'movie3_still.jpg' %}" alt="" style= "width: 466px; height:400px">
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-              <div class="card-body">
-                <h5 class="card-title">다크 나이트 라이즈</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              </div>
-          </article>
-          <article>
-            <div class="card" data-bs-toggle="modal" data-bs-target="#staticBackdrop4">
-              <img src="{% static 'movie4.jpg' %}" class="img-fluid rounded-start" alt="...">
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop4" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Still Cut</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <img src="{% static 'movie4_still.jpg' %}" alt="" style= "width: 466px; height:400px">
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-              <div class="card-body">
-                <h5 class="card-title">그랜드 부다페스트 호텔</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              </div>
-          </article>
-          <article class="col-lg-3 offset-lg-3">
-            <div class="card" data-bs-toggle="modal" data-bs-target="#staticBackdrop5">
-              <img src="{% static 'movie5.jpg' %}" class="img-fluid rounded-start" alt="...">
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop5" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Still Cut</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <img src="{% static 'movie5_still.jpg' %}" alt="" style= "width: 466px; height:400px">
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-              <div class="card-body">
-                <h5 class="card-title">Her</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              </div>
-          </article>
-          <article>
-            <div class="card" data-bs-toggle="modal" data-bs-target="#staticBackdrop6">
-              <img src="{% static 'movie6.jpg' %}" class="img-fluid rounded-start" alt="...">
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop6" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Still Cut</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <img src="{% static 'movie6_still.jpg' %}" alt="" style= "width: 466px; height:400px">
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-              <div class="card-body">
-                <h5 class="card-title">위대한 쇼맨</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              </div>
-          </article>
-        </div>
-      </section>
-    </div>
-  {% endblock movies %}
-  ```
-
-- 해결 방식 
-
-  1.  static을 로드하고, 영화 이미지를 전송
-  6. carousel을 이용한 영화 자동 넘기기
-  6. card 배치를 container와 row-col로 해결
-  6. 각 카드별 스틸컷이 나오는 이미지 구현하기 
-  
-- 이 문제에서 어려웠던 점 
-
-  - modal의 사진 조정 
-  - 각 카드별 modal 구현 
-  
-- 내가 생각하는 이 문제의 포인트
-
-  - 카드 이미지를 static으로 불러오고, html에 구현
-  
-- 이 문제의 느낀점
-
-  - 해결방식을 쓰다보니 쉬워 보이지만, 직접 구현할 때는 매우 시간이 오래 걸렸던 것 같습니다. 
 
 
 
-## C.  recommendations.html
-
-#### 요구사항 : 
-
-i. Bootstrap Card 컴포넌트를 사용합니다.
-ii. 영화 “쇼생크 탈출”과 비슷한 영화를 추천 받을 수 있도록 API 요청을 보냅니다.
-iii. TMDB API로부터 응답 받은 추천 영화 목록 중 랜덤으로 하나를 출력합니다.
-iv. 웹 페이지의 viewport 너비 크기에 따라 다음과 같은 레이아웃으로 구성됩니다.
-v. 576px 미만 및 이상
-
-- 문제 접근 방법 : python과 api를 이용해서 영화 정보를 받아오고, 페이지에 구현 해보자 
-
-  ``` html
-  {% extends 'base.html' %}
-  
-  
-  {% block header %}
-  <header class="d-flex flex-column justify-content-center align-items-center text-black fw-bold my-5 mx-5">
-    <div class="display-6 mt-5">쇼생크 탈출과 비슷한 영화 추천받기</div>
-  </header>    
-  {% endblock header %}
-  
-  {% block movies %}
-  
-    {% comment %} <div class="container d-flex justify-content-center">
-      <div class="row row-cols-1 row-cols-md-2 ">
-        <article>
-          <div>
-            <img src="https://image.tmdb.org/t/p/w500/{{ poster }} " class="card-img-top" alt="...">
-          </div>
-        </article>
-        <article>
-          <div class="card-body my-auto">
-            <div class="card-title d-flex">
-              <div class="pe-2" >{{ title }}</div>
-              <div class="badge bg-success text-wrap" >
-                {{ vote_average }}
-              </div>
-            </div>
-            <p class="card-text my-0" style="font-size: 12px; ">{{ overview }}</p>
-            <p>개봉일 : {{ release_date }}</p>
-            <a href="https://www.themoviedb.org/movie/{{ id }}?language=ko" class="btn btn-primary fx-6 my-0">상세정보</a>
-          </div>
-        </article>
-      </div>
-    </div> {% endcomment %}
-  
-  
-    <div class="card container d-flex justify-content-center" style="max-width: 540px;">
-      <div class="row g-0">
-        <div class="col-md-2 mt-5">
-          <img src="https://image.tmdb.org/t/p/w500/{{ poster }}" class="img-fluid rounded-start" alt="...">
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <div class="card-title d-flex">
-              <div class="pe-2" >{{ title }}</div>
-              <div class="badge bg-success text-wrap" >
-                {{ vote_average }}
-              </div>            
-            </div>
-            <p class="card-text my-0" style="font-size: 12px; ">{{ overview }}</p>
-            <p>개봉일 : {{ release_date }}</p>
-            <a href="https://www.themoviedb.org/movie/{{ id }}?language=ko" class="btn btn-primary fx-6 my-0">상세정보</a>
-          </div>
-      </div>
-    </div>
-  {% endblock movies %}
-  ```
-  
-- 해결 방식 
-
-  1. python을 이용해 api에 따라 데이터를 가져오고 딕셔너리로 변환 후, html에 넘겨주었습니다.
-  1. container와 row-cols를 이용해 요소를 반응형으로 정렬했습니다.
-  
-- 이 문제에서 어려웠던 점 
-
-  - api크롤링은 비교적 쉽게 진행되었으나, html내부에서 요소를 정렬하는게 어려웠습니다.
-
-- 내가 생각하는 이 문제의 포인트
-
-  - bootstrap 사용 능력
-  - api 크롤링을 통해 영화 정보 가져오기
-  
-- 이 문제의 느낀점
-
-  - 부트스트랩을 오랜만에 다뤄봤더니 시간이 너무 오래걸렸습니다. 그리고, 결국 마음대로 구현할 수 없었습니다. 
-  - -> card 컴포넌트를 이용해 수정했더니 잘 수정되었습니다. 
-
-
-
-
-
-## views.py
+### index.html
 
 ```python
-from django.shortcuts import render
-import requests
-import random
+path('',views.index,name= 'index'),
+```
 
-def movie_recommendation(title):
-    BASE_URL = 'https://api.themoviedb.org/3'
-    path = '/search/movie'
-    params = {
-        'api_key' : 'bbd81b379a884bf9476fc33b50fdc89b',
-        'region' : 'KR',
-        'language' : 'ko',
-        'query' : title
-    }
-    response = requests.get(BASE_URL + path, params = params).json()
-    if response['results'] == [] :
-        return None
-    # 여기에 코드를 작성합니다. 
-    movie_id = response['results'][0]['id'] 
-    
-    BASE_URL_2 = 'https://api.themoviedb.org/3'
-    path_2 = f'/movie/{movie_id}/recommendations'
-    params_2 = {
-        'api_key' : 'bbd81b379a884bf9476fc33b50fdc89b',
-        'language' : 'ko'
-    }
-    response2 = requests.get(BASE_URL_2 + path_2, params = params_2).json()
-    # 여기에 코드를 작성합니다.  
-
-    recommend = response2['results']
-    recommend_list = []
-    for movie in recommend :
-        info = [movie['title'],movie['vote_average'],movie['release_date'],movie['overview'],movie['poster_path'],movie['id']]
-        recommend_list.append(info)
-
-    return random.choice(recommend_list)
-
-# Create your views here.
+```python
 def index(request) :
-    return render(request,'index.html')
-
-
-def recommendations(request) :
-    rec = movie_recommendation('쇼생크 탈출')
+    #sql에 저장된 모든 영화 정보를 쿼리형태로 가져온다. 
+    movies = Movie.objects.all()
+    #context에 영화정보를 넣어 index.html에 전달한다. 
     context = {
-        'title' : rec[0],
-        'vote_average' : round(rec[1],1),
-        'release_date' : rec[2],
-        'overview' : rec[3],
-        'poster' : rec[4],
-        'id' : rec[5]
+        'movies' : movies
     }
-    return render(request,'recommendations.html',context)
+    return render(request,'movies/index.html',context)
+
 ```
 
-## urls
+```html
+{% extends 'base.html' %}
+
+
+{% block content %}
+  {% comment %} 영화 게시판 목록을 보여줄 페이지  {% endcomment %}
+  <h1>INDEX</h1>
+  {% comment %} 하이퍼링크로 표시된 NEW를 클릭하면 새로운 게시물을 작성할 수 잇게 movies:new를 실행한다. {% endcomment %}
+  <a href="{% url 'movies:new' %}">NEW</a>
+  <br>
+  <br>
+  {% comment %} 모든 movies 데이터를 돌며 한개의 영화씩 영화 제목과 평점을 표시한다.  {% endcomment %}
+  {% for movie in movies %}
+  {% comment %} 영화 제목을 클릭하면 movies:detail을 실행하여 영화의 세부 정보를 볼 수 있다.  {% endcomment %}
+    <a href="{% url 'movies:detail' movie.pk %}">{{movie.title}}</a>
+    <p>평점: {{movie.score}}</p>
+    <hr>
+  {% endfor %}
+
+{% endblock content %}
+```
+
+- 해결 방식 
+  1. app_name을 'movies'로 입력한 후 templates 폴더 내부에 movies 폴더를 추가로 등록해 앱을 추가로 생성했을 때 name_space 에러를 방지했습니다. 
+  2.  sql에 admin계정을 이용해 dummy 데이터를 입력했습니다.
+  3. movies에 movie class에 있는 모든 데이터를 저장한 후 context에 저장해서 html에 넘겨주게 설계했습니다.
+  4. INDEX 페이지를 설계할 때는 받아온 movies를 순회하며 각 영화의 제목과 평점을 표시하게 했습니다.
+  5. new 하이퍼링크를 생성해 추후 새로운 게시글을 생성할 준비를 했습니다.
+  6. 각 영화 제목에 하이퍼링크를 줘서 영화의 세부정보에 접근할 수 있게 했습니다. 
+- 이 문제에서 어려웠던 점
+- 내가 생각하는 이 문제의 포인트
+
+  - 데이터를 함수를 이용해 movies에 저장하고 html에 전달
+  - html에서 반복문 사용 
+- 이 문제의 느낀점
+
+  - 상대경로로 접근하는 것과 url로 접근하는 것의 차이를 느꼈습니다. 
+
+
+
+### detail.html
+
+``` python
+path('<int:pk>/',views.detail,name='detail'),
+```
 
 ```python
-#pjt04
-from django.contrib import admin
-from django.urls import path, include
-from movies import views
+def detail(request,pk) :
+    #영화 상세정보를 볼 수 있는 페이지므로 각 영화 게시글별로 고유한 pk값을 같이 받는다. 
+    movie = Movie.objects.get(pk=pk) 
+    #pk값을 바탕으로 하나의 영화 인스턴스를 movie에 저장한다.
+    context = {
+        'movie' : movie,
+    }
 
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('movies/',include('movies.urls')),
-]
-#movies
-from django.urls import path
-from . import views
-app_name = 'movies'
-urlpatterns = [
-    path('',views.index,name='movies'),
-    path('recommendations/',views.recommendations,name='recommendations'),
-]
+    #해당 영화 정보를 가진 detail.html을 반환한다. 
+    return render(request,'movies/detail.html',context)
 ```
 
+```html
+{% extends 'base.html' %}
 
+
+{% block content %}
+  {% comment %} 영화 세부정보를 표시하는 DETAIL 페이지이다.  {% endcomment %}
+  <h1>DETAIL</h1>
+  {% comment %} poster_url을 이용하여 이미지를 표시한다.  {% endcomment %}
+  <img src="{{movie.poster_url}}" alt="{{movie.title}}">
+  <hr>
+  {% comment %} 다양한 영화 세부정보를 varible routing을 이용해서 표현한다. {% endcomment %}
+  <p>{{movie.title}}</p>
+  <p>Audience : {{movie.audience}}</p>
+  <p>Release Dates : {{movie.release_date}}</p>
+  <p>Genre : {{movie.genre}}</p>
+  <p>Score : {{movie.score}}</p>
+  <p>Description : {{movie.description}}</p>
+  {% comment %} <a href="{% url 'movies:edit' %}">EDIT</a> {% endcomment %}
+  {% comment %} 수정, 삭제, 뒤로가기 버튼을 생성한다.  {% endcomment %}
+
+  {% comment %} 삭제는 POST 기능으로 전달해야하기 때문에, form 형태로 만들되 형식을 맞추기 위해 bootstrap의 기능을 이용해
+  a태그를 사용한 것과 같이 만들고, flex와 align-items-center를 이용해 행열을 맞춰준다.  {% endcomment %}
+  <div class="d-flex align-items-center">
+    {% comment %} movies:edit를 실행하고 현재 영화의 pk값을 전달한다.  {% endcomment %}
+      <a href="{% url 'movies:edit' movie.pk %}">EDIT</a>
+    {% comment %} movies:delete를 실행하고 현재 영화의 pk값을 전달한다.  {% endcomment %}
+    <form action="{% url 'movies:delete' movie.pk %}" method = 'POST'>
+      {% csrf_token %}
+      <button class="btn btn-link">DELETE</button>
+    </form>
+
+  </div>
+  {% comment %} back을 누르면 movies:index를 실행해서 메인페이지로 돌아간다.  {% endcomment %}
+  <a href="{% url 'movies:index' %}">BACK</a>
+{% endblock content %}
+```
+
+- 해결 방식 
+  1. detail.html은 하나의 html에 variable routing을 이용해 다른 정보를 표시하게 설계했습니다. 
+  1. views에서 detail 함수는 index에서 클릭시 pk값을 함께 받도록 설계했으며, 해당 pk 값의로 movie라는 변수에 정보를 담게 한 후 context에 저장하게 했습니다. 
+  1. html에서는 img기능을 이용해 주소로 포스터 이미지를 표시하게 했습니다.
+  1. 또한 변수기능을 이용해 영화의 각 세부정보를 표시하게 했습니다. 
+  1. a태그를 이용해 메인페이지로 돌아가거나 edit을 이용한 수정 html 전달 구현을 준비했습니다.
+  1. delete는 redirect와 url에 표시하지 않기 위해 post로 값을 전달했습니다. 
+  1. 추후 API를 이용해 영화 제목만으로 정보를 불러오는 기능을 구현할 예정입니다. 
+- 이 문제에서 어려웠던 점 
+
+  - button 정렬 
+- 내가 생각하는 이 문제의 포인트
+
+  - 다른 html에서 url을 이용해 정보를 전달하고 함수를 통해 받아오기 
+- 이 문제의 느낀점
+
+  - 수정, 삭제가 비슷해보여도 구현하려하는 방식에 따라 다를수 있다. 
+
+## new.html
+
+```python
+path('new/',views.new,name='new'),
+path('create/', views.create, name='create'), 
+```
+
+```python
+def new(request) :
+    #새로운 영화게시글을 만들 new.html을 실행한다. 
+    return render(request,'movies/new.html')
+
+def create(request) :
+    #new에서 넘어온 데이터를 바탕으로 각 항목에 매핑한다. 
+    title = request.POST.get('title')
+    audience = request.POST.get('audience')
+    release_date = request.POST.get('release_date')
+    genre = request.POST.get('genre')
+    score = request.POST.get('score')
+    poster_url = request.POST.get('url')
+    description = request.POST.get('description')
+
+    #movie인스턴스를 생성 후 
+    movie = Movie()
+    # 각 값을 대입하고
+    movie.title=title
+    movie.audience = audience
+    movie.release_date = release_date
+    movie.genre = genre
+    movie.score = score
+    movie.poster_url = poster_url
+    movie.description = description
+    #저장한다. 
+    movie.save()
+    #함수 실행이 끝나면 메인페이지로 돌아간다. 
+    return redirect('movies:index')
+```
+
+```html
+{% extends 'base.html' %}
+
+
+{% block content %}
+{% comment %} 새로운 영화 정보를 등록하는 NEW페이지  {% endcomment %}
+  <h1>NEW</h1>
+  <hr>
+
+  {% comment %} 폼 형태로 데이터를 movies:create url로 전송하며 POST형태로 전송하여 작성된 글이 url에 표시되지 않도록 한다.  {% endcomment %}
+  <form action="{% url 'movies:create' %}" method="POST">
+    {% csrf_token %}
+    {% comment %} 영화 정보는 text타입으로 받는다.  {% endcomment %}
+    <label for="title">TITLE</label>
+    <input type="text"  id="title" name="title" >
+    <br>
+    {% comment %} 관람객수는 number타입으로 받는다.  {% endcomment %}
+    <label for="audience" >AUDIENCE</label>
+    <input type="number" id="audience" name="audience">
+    <br>
+    {% comment %} 개봉일은 date타입으로 받는다. {% endcomment %}
+    <label for="release_date" >RELEASE_DATE</label>
+    <input type="date" id="release_date"  name="release_date">
+    <br>
+    {% comment %} 장르는 select를 이용해서 장르 중 선택이 가능하도록 설정한다.  {% endcomment %}
+    <label for="genre" >GENRE</label>
+    <select id="genre" name="genre" >
+      <option value="comedy">코미디</option>
+      <option value="action">액션</option>
+      <option value="thriller">스릴러</option>
+      <option value="fear">공포</option>
+      <option value="war">전쟁</option>
+    </select>
+    <br>
+    {% comment %} 평점은 number타입으로 받되, step을 이용하여 소수 둘째자리까지 받을 수 있도록 한다.  {% endcomment %}
+    <label for="score" >SCORE</label>
+    <input type="number" step="0.01"  id="score" name="score">
+    <br>
+    {% comment %} url은 포스터 이미지를 html에 표시해야 함으로, url 형태로 받게한다.  {% endcomment %}
+    <label for="url" >POSTER_URL</label>
+    <input type="url" id="url" name="url">
+    <br>
+    {% comment %} 줄거리는 여러 글이 올 수 있게 textarea 기능을 이용한다.  {% endcomment %}
+    <label for="description"> description</label>
+    <textarea name="description" id="description" cols="10" rows="4"></textarea>
+
+    <br>
+    <input type="submit">
+    <input type="reset">
+  </form>
+  <a href="{% url 'movies:index' %}">BACK</a>
+{% endblock content %}
+```
+
+- 해결 방식 
+  1. 새로운 정보를 등록할 때 필요한 new.html을 생성한 후 그 정보를 저장할 create 함수를 만들었습니다.
+  1. new.html에서는 기본적인 폼 형태를 만들었으며, 각 for,id,name을 매칭하여 데이터를 전달하고 제가 확인할 수 있게 생성했습니다. 
+  1. 각 타입에 맞게 input에 type을 주었고, 필요할 경우 select와 textarea 기능을 사용했습니다. 
+  1. 평점은 소수가 필요해서 step을 이용해 소수점도 입력이 가능하게 구현했습니다. 
+  1. 작성된 폼을 제출하면 url에서 movies앱의 create를 실행하게 했습니다.
+  1. create가 실행되면 POST를 통해 넘어온 값을 바탕으로 빈 인스턴스를 생성하고 넘어온 값들을 저장해줍니다.
+  1. create 실행이 끝나면 redirect를 이용해 메인페이지로 이동합니다. 
+- 이 문제에서 어려웠던 점 
+
+  - form 구조 만들기
+  - select이용하기 
+  - POST 이용하기 
+- 내가 생각하는 이 문제의 포인트
+
+  - POST를 이용한 값 전달 
+  - 다양한 input type  이용 하기
+- 이 문제의 느낀점
+
+  - form을 이용해서 다양한 값을 받는게 재밌었지만, 게시판 특성과 별로 맞는 것 같지 않았다.
+  - api로 구현해보고 싶다
+
+### delete
+
+```python
+path('<int:pk>/delete',views.delete,name='delete'),
+```
+
+```python
+def delete(request,pk) :
+    #게시글을 삭제하는 함수이다. 
+    if request.method == 'POST' :
+        #POST형태로 해당 영화의 Primary key가 전달되면  
+        movie = Movie.objects.get(pk=pk)
+        #게시글을 삭제한다. 
+        movie.delete()
+    return redirect( 'movies:index')
+```
+
+- 해결 방식 
+  1. detail에서 삭제 버튼을 클릭하면 movies:delete를 실행시키고, pk값을 POST로 전달한다.
+  1. POST로 값이 전달된 경우 해당 게시글 을 삭제하고 메인페이지를 반환한다.  
+- 이 문제에서 어려웠던 점 
+- 내가 생각하는 이 문제의 포인트
+  - delete 사용 
+- 이 문제의 느낀점
+
+  - POST는 button으로만 주자 ! 
+
+## edit.html
+
+```python
+path('<int:pk>/edit/', views.edit,name='edit'),
+path('<int:pk>/update/', views.update, name='update')
+```
+
+```python
+def edit(request,pk) :
+    #게시글을 수정하는 함수이다. 
+    movie = Movie.objects.get(pk=pk)
+    #받아온 pk를 바탕으로 movie인스턴스에 저장하고 
+    context = {
+        'movie' : movie 
+    }
+    #context에 담아 edit.html로 보낸다. 
+    return render(request,'movies/edit.html',context)
+
+    #영화 정보를 update하는 함수이다. 
+def update(request,pk) :
+    #edit에서 전달한 pk를 바탕으로 해당 인스턴스에 점근한다.
+    movie = Movie.objects.get(pk=pk)
+    #edit에서 전달한 내용을 바탕으로 수정을 진행하고 저장한다. 
+    movie.title = request.POST.get('title')
+    movie.audience = request.POST.get('audience')
+    movie.release_date = request.POST.get('release_date')
+    movie.genre = request.POST.get('genre')
+    movie.score = request.POST.get('score')
+    movie.poster_url = request.POST.get('url')
+    movie.description = request.POST.get('description')
+    movie.save()
+
+    return redirect('movies:index')
+```
+
+```html
+{% extends 'base.html' %}
+
+
+{% block content %}
+  {% comment %} 등록한 영화정보를 수정하는 EDIT 페이지이다.  {% endcomment %}
+  <h1>EDIT</h1>
+  <hr>
+  {% comment %} 기본적인 형태는 NEW에서 사용하는 FORM을 바탕으로 작성하되, 기본 등록되어 있는 값을 유지하도록 value를 설정해준다.  {% endcomment %}
+  <form action="{% url 'movies:update' movie.pk %}" method="POST">
+    {% csrf_token %}
+    <label for="title">TITLE</label>
+    <input type="text"  id="title" name="title" value="{{movie.title}}" >
+    <br>
+    <label for="audience" >AUDIENCE</label>
+    <input type="number" id="audience" name="audience" value="{{movie.audience}}" >
+    <br>
+    <label for="release_date" >RELEASE_DATE</label>
+    <input type="date" id="release_date"  name="release_date" value="{{movie.release_date|date:'Y-m-d'}}" >
+    <br>
+    <label for="genre" >GENRE</label>
+    <select id="genre" name="genre" value="{{movie.genre}}"  >
+      <option value="comedy">코미디</option>
+      <option value="action">액션</option>
+      <option value="thriller">스릴러</option>
+      <option value="fear">공포</option>
+      <option value="war">전쟁</option>
+    </select>
+    <br>
+    <label for="score" >SCORE</label>
+    <input type="number" step="0.01"  id="score" name="score" value="{{movie.score}}" >
+    <br>
+    <label for="url" >POSTER_URL</label>
+    <input type="url" id="url" name="url" value="{{movie.poster_url}}" >
+    <br>
+    <label for="description"> description</label>
+    <textarea name="description" id="description" cols="10" rows="4"  >{{movie.description}}</textarea>
+
+    <br>
+
+    <input type="reset">
+    <input type="submit">
+  </form>
+  <hr>
+  <a href="{% url 'movies:index' %}">BACK</a>
+{% endblock content %}
+```
+
+- 해결 방식 
+  1. new-create와 마찬가지로 edit-update 함수를 연결되게 설계하였다.
+  1. edit버튼을 detail에서 클릭하면 그 영화의 pk값이 함께 전달되는데, 그러면 그 값을 담아 form으로 보낸다.
+  1. form의 기본 형식은 new와 동일하며 value를 movie.poster_url로 설정하여 기존에 입력된 값이 남아있게 했다.
+  1. edit이 끝나고 제출을 누르면 update는 해당 영화의 pk 값을 POST로 전달 받는다. 
+  1. 전달 받은 후 해당 pk값의 영화를 불러와 변경사항을 실행하고 영화정보를 저장한다. 
+- 이 문제에서 어려웠던 점 
+  - value를 입력하는 방식을 잊어서 처음에 해맸습니다.
+  - date type 및 textarea에서의 value 에러 
+  - 사소한 오타
+- 내가 생각하는 이 문제의 포인트
+  - date type 같은 경우는 django reference를 참고하여 형식을 맞춰주어야 form에서 value로 인식될 수 있다는 것을 알았습니다
+- 이 문제의 느낀점
+
+  - 대충 만들어졌다고 넘어가지말고 각 기능이 잘 구현되는지 보자 
 
 
 
 ### 후기
 
-- python 코드로 도출한 결과를 html에 구현할 수 있다는 점이 좋았습니다. 
-- 컨테이너를 마지막 페이지에 정렬하는데 어려움을 겪어서 아쉬웠습니다.
-- 지난 프로젝트가 이번 프로젝트에 도움이 많이 되어서 꾸준히 프로젝트를 발전시키는 것의 즐거움을 느꼈습니다.
-- final 프로젝트가 기대됩니다. 
+- django와 부트스트랩을 이용해 내가 원하는 방식으로 페이지를 구현할 수 있다는 것이 재밌었습니다.  
+- django를 할 때 과거 프로젝트를 살펴보거나, 구글링을 이용하여 오류를 해결할 수 있습니다. 
+- 
 
