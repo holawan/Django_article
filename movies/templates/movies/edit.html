@@ -15,7 +15,7 @@
     <input type="number" id="audience" name="audience" value="{{movie.audience}}" >
     <br>
     <label for="release_date" >RELEASE_DATE</label>
-    <input type="date" id="release_date"  name="release_date" value="{{movie.release_date}}" >
+    <input type="date" id="release_date"  name="release_date" value="{{movie.release_date|date:'Y-m-d'}}" >
     <br>
     <label for="genre" >GENRE</label>
     <select id="genre" name="genre" value="{{movie.genre}}"  >
@@ -33,10 +33,11 @@
     <input type="url" id="url" name="url" value="{{movie.poster_url}}" >
     <br>
     <label for="description"> description</label>
-    <textarea name="description" id="description" cols="10" rows="4" value="{{movie.description}}" ></textarea>
+    <textarea name="description" id="description" cols="10" rows="4"  >{{movie.description}}</textarea>
 
     <br>
     <input type="submit">
+    <input type='reset'>
   </form>
   <a href="{% url 'movies:index' %}">BACK</a>
 {% endblock content %}
