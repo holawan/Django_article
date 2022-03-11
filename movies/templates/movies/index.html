@@ -2,15 +2,17 @@
 
 
 {% block content %}
-
+  {% comment %} 영화 게시판 목록을 보여줄 페이지  {% endcomment %}
   <h1>INDEX</h1>
-
+  {% comment %} 하이퍼링크로 표시된 NEW를 클릭하면 새로운 게시물을 작성할 수 잇게 movies:new를 실행한다. {% endcomment %}
   <a href="{% url 'movies:new' %}">NEW</a>
   <br>
   <br>
+  {% comment %} 모든 movies 데이터를 돌며 한개의 영화씩 영화 제목과 평점을 표시한다.  {% endcomment %}
   {% for movie in movies %}
+  {% comment %} 영화 제목을 클릭하면 movies:detail을 실행하여 영화의 세부 정보를 볼 수 있다.  {% endcomment %}
     <a href="{% url 'movies:detail' movie.pk %}">{{movie.title}}</a>
-    <p>{{movie.score}}</p>
+    <p>평점: {{movie.score}}</p>
     <hr>
   {% endfor %}
 
