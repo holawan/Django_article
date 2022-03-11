@@ -36,8 +36,10 @@
     <textarea name="description" id="description" cols="10" rows="4"  >{{movie.description}}</textarea>
 
     <br>
+
+    <input type="reset">
     <input type="submit">
-    <input type='reset'>
   </form>
+  <hr>
   <a href="{% url 'movies:index' %}">BACK</a>
 {% endblock content %}
