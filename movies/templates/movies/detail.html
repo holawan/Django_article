@@ -15,9 +15,13 @@
   <p>Score : {{movie.score}}</p>
   <p>{{movie.description}}</p>
   {% comment %} <a href="{% url 'movies:edit' %}">EDIT</a> {% endcomment %}
-  <form action="{% url 'movies:delete' movie.pk %}" method = 'POST'>
-    {% csrf_token %}
-    <button class="btn btn-link">DELETE</button>
-  </form>
+  <div class="d-flex align-items-center">
+      <a href="{% url 'movies:edit' movie.pk %}">EDIT</a>
+    <form action="{% url 'movies:delete' movie.pk %}" method = 'POST'>
+      {% csrf_token %}
+      <button class="btn btn-link">DELETE</button>
+    </form>
+
+  </div>
   <a href="{% url 'movies:index' %}">BACK</a>
 {% endblock content %}

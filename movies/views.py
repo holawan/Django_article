@@ -52,3 +52,23 @@ def delete(request,pk) :
         movie.delete()
     return redirect( 'movies:index')
 
+def edit(request,pk) :
+    movie = Movie.objects.get(pk=pk)
+
+    context = {
+        'movie' : movie 
+    }
+    return render(request,'movies/edit.html',context)
+
+def update(request,pk) :
+    movie = Movie.objects.get(pk=pk)
+    movie.title = request.POST.get('title')
+    movie.audience = request.POST.get('audience')
+    movie.release_date = request.POST.get('release_date')
+    movie.genre = request.POST.get('genre')
+    movie.score = request.POST.get('score')
+    movie.poster_url = request.POST.get('url')
+    movie.description = request.POST.get('description')
+    movie.save()
+
+    return redirect('movies:index')
