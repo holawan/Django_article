@@ -129,7 +129,7 @@ i. 공유템플릿 이용하기
   </html>
   ```
 
-
+![INDEX](README.assets/INDEX.PNG)
 
 ### index.html
 
@@ -187,7 +187,7 @@ def index(request) :
 
   - 상대경로로 접근하는 것과 url로 접근하는 것의 차이를 느꼈습니다. 
 
-
+![DETAIL](README.assets/DETAIL.PNG)
 
 ### detail.html
 
@@ -262,6 +262,10 @@ def detail(request,pk) :
 - 이 문제의 느낀점
 
   - 수정, 삭제가 비슷해보여도 구현하려하는 방식에 따라 다를수 있다. 
+
+
+
+![NEW](README.assets/NEW.PNG)
 
 ## new.html
 
@@ -403,6 +407,8 @@ def delete(request,pk) :
 - 이 문제의 느낀점
 
   - POST는 button으로만 주자 ! 
+
+![EDIT](README.assets/EDIT-16470076265911.PNG)
 
 ## edit.html
 
