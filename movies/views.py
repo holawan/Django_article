@@ -33,8 +33,8 @@ def create(request) :
     movie.description = description
     movie.save()
 
-    return redirect('movies:detail', movie.pk)
-    
+    return redirect('movies:index')
+
 def detail(request,pk) :
     movie = Movie.objects.get(pk=pk) 
 
